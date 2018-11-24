@@ -94,7 +94,7 @@ def check_for_responses(emotion, sentence, name):
             if word.lower() in TY_SAD_NEG_KEYWORDS:
                 rand_item = TY_SAD_NEG_RESPONSES[random.randrange(len(TY_SAD_NEG_RESPONSES))]
                 need_sug = "0"
-        return [rand_item, need_sug]
+    return [rand_item, need_sug]
 
 
 # _questions
