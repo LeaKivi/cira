@@ -16,32 +16,32 @@ print(response.content)
 print("----------------")
 # Sentences we'll respond with if the user greeted us
 # Sentences we'll respond with if the user greeted us
-GREETING_KEYWORDS = ("hello", "hey", "hi", "greetings", "sup")
+GREETING_KEYWORDS = ("hello", "hey", "hi", "greetings", "sup","hi!")
 GREETING_JOY_RESPONSES = ["Hi {}, how was your day?", "Hello {}. How are you?", "Hi {}! Nice to see you! How are you doing?"]
 GREETING_SAD_RESPONSES = ["'Hi {}, how are you today?", "Hey {}, I'm glad you wrote me, how are you?"]
 
-HRY_JOY_KEYWORDS = ("good", "everything", "fine")
+HRY_JOY_KEYWORDS = ("good", "everything", "fine","good", "fine", "ok", "idk", "don't know","dunno","cool","alright","okay")
 HRY_JOY_RESPONSES = ["Glad to hear. Can I do anything?", "That's good. Can I help you with something?", ]
 
-SUG_JOY_KEYWORDS = ("suggest", "music", "suggestions", "listen")
+SUG_JOY_KEYWORDS = ("suggest", "suggestion","suggestions", "recommend", "something", "Haven't", "heard", "?", "what","suggestion?","listen","music")
 SUG_JOY_RESPONSES = ["Sure! Check this one out", "Yep! Try this one: ", "Most certainly! Check this one "]
 
-TY_JOY_POS_KEYWORDS = ("thanks", "thank you", "nice", "!")
+TY_JOY_POS_KEYWORDS = ("thanks", "thank you", "nice", "!","thank")
 TY_JOY_POS_RESPONSES = ["You are welcome", "Glad I could help", "Anytime"]
 
-HRY_SAD_KEYWORDS = ("good", "fine", "ok",)
-HRY_SAD_RESPONSES = ["Talk to me", "Anything on you mind?"]
+HRY_SAD_KEYWORDS = ("good", "fine", "ok", "idk", "don't know","dunno","cool","alright","okay" )
+HRY_SAD_RESPONSES = ["Tell me how your day is going", "Anything on your mind?"]
 
-WH_0_SAD_KEYWORDS = ("sucks", "hate", "bad")
+WH_0_SAD_KEYWORDS = ("sucks", "suck","hate", "bad")
 WH_0_SAD_RESPONSES = ["Why do you say so?", "Can you tell me why?", "What made you feel that way?"]
 
-WH_1_SAD_KEYWORDS = ("can't", "concentrate", "anything", "sad", "nothing", "confused")
+WH_1_SAD_KEYWORDS = ("can't", "concentrate", "anything", "sad", "nothing", "confused","awful","lonely","stressed","stress","stressful","mad","angry","scared","afraid","tired","irritated","annoyed","irritate","annoy","shit")
 WH_1_SAD_RESPONSES = ["I see... Did you try listen to music? I heard it can help"]
 
-SUG_SAD_KEYWORDS = ("suggest", "suggestion", "recommend", "something", "Haven't", "heard", "?", "what")
+SUG_SAD_KEYWORDS = ("suggest", "suggestion","suggestions", "recommend", "something", "Haven't", "heard", "?", "what","suggestion?","listen","music")
 SUG_SAD_RESPONSES = ["Sure! Check this one out", "Yep! Try this one: ", "Most certainly! Check this one "]
 
-TY_SAD_POS_KEYWORDS = ("wow", "thanks", "really", "helped")
+TY_SAD_POS_KEYWORDS = ("wow", "thanks", "helped","thank")
 TY_SAD_POS_RESPONSES = ["You are most welcome", "Glad I could help", "Anytime"]
 
 TY_SAD_NEG_KEYWORDS = ("not", "helping...", "nothing's", "changed", "doesn't", "help")
@@ -51,10 +51,11 @@ ATTACHMENTS_Concentration = ("video-16108331_456253513", "audio762177_338483985"
 ATTACHMENTS_Cheer = ("audio-2000955558_456239020", "video-1486527_162409309", "audio-2000765891_456239030")
 
 def check_for_responses(emotion, sentence, name):
+    rand_item = "Sorry, I don't understand that. Can you rephrase?"
+    need_sug = "0"
     for word in sentence.split():
         print(word.lower())
-        rand_item = "Please repeat"
-        need_sug = "0"
+
         if emotion == "joy":
             if word.lower() in GREETING_KEYWORDS:
                 rand_item = GREETING_JOY_RESPONSES[random.randrange(len(GREETING_JOY_RESPONSES))]
@@ -120,6 +121,7 @@ while 1:
         # do the analysis and detect emotion and decide what to send to user
         detected_emotion = mood.checkMood(peer_id)
         print(detected_emotion)
+        detected_emotion = detected_emotion[0]
 
         # print(mood.checkMood(peer_id))
         user_response = requests.get(
@@ -142,4 +144,3 @@ while 1:
 
         print("Bot Response")
         print(bot_response.content)
-

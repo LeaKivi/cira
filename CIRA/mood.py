@@ -8,7 +8,7 @@ indicoio.config.api_key = 'd3b7a4d2761c18a403b04e1fe7802e43'
 
 moods = {}      # dict of users : dict of 5 moods avgs
 counter = {}    # for incremental avgs of moods
-last_post = -1  # keep track of analyzed post by date
+last_post = {}  # keep track of analyzed post by date
 error = 0       # profile error flag
 
 # calculate incremental averages
@@ -26,9 +26,9 @@ def analyzePosts(user):
     try:
         for each in profile['response']['items'][::-1]:
             # if post already analyzed, break
-            if last_post >= each['date']:
+            if last_post[user] >= each['date']:
                 continue
-            last_post = each['date']
+            last_post[user] = each['date']
 
             # get probabilities of emotions -> into list
             counter[user] += 1
@@ -53,7 +53,7 @@ def maxMood(user):
 
 # check the mood of the user
 def checkMood(user):
-    global moods, counter
+    global moods, counter, error
 
     # katalina's profile is private
     # for demo purposes
@@ -63,6 +63,7 @@ def checkMood(user):
     # add user if they're not in database
     if user not in counter:
         counter[user] = 0
+        last_post[user]=-1
         moods[user] = {'joy': 0, 'surprise': 0, 'anger': 0, 'fear': 0, 'sadness': 0}
 
     # classify emotions
@@ -70,9 +71,10 @@ def checkMood(user):
 
     # if profile error
     if error:
+        error = 0
         return("neutral")
 
-    return maxMood(user)
+    return (maxMood(user), moods[user])
 
 # execute
 # sara persona: 518274967
