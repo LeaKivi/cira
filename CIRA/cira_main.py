@@ -1,6 +1,7 @@
 import requests
-from random import *
+import random
 import json
+import mood
 
 #initiate chat
 response = requests.get("https://api.vk.com/method/groups.getLongPollServer?group_id=174367830&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92")
@@ -24,11 +25,12 @@ HRY_SAD_RESPONSES = []
 
 
 def check_for_responses(emotion, sentence):
-    for word in sentence:
-        if word.lower() in GREETING_KEYWORDS and emotion == "happy":
-            random.shuffle(GREETING_JOY_RESPONSES, random)
-            return GREETING_JOY_RESPONSES[0]
-        elif word.lower() in GREETING_KEYWORDS and emotion == "sad":
+    for word in sentence.split():
+        print(word.lower())
+        if word.lower() in GREETING_KEYWORDS and emotion == "joy":
+            rand_item = GREETING_JOY_RESPONSES[random.randrange(len(GREETING_JOY_RESPONSES))]
+            return rand_item
+        elif word.lower() in GREETING_KEYWORDS and emotion == "sadness":
             random.shuffle(GREETING_SAD_RESPONSES, random)
             return GREETING_SAD_RESPONSES[0]
 
@@ -48,13 +50,12 @@ while 1:
             text = f['object']['text']
 
     if peer_id != 0 and peer_id != "-174367830":
-        random_num = randint(1, 10000)
-
+        random_num = random.randint(1, 10000)
         #do the analysis and detect emotion and decide what to send to user
 
-        detected_emotion = "happy"
+        #print(mood.checkMood(peer_id))
 
-        processed_response = GREETING_JOY_RESPONSES[0]
+        processed_response = check_for_responses("happy", text)
 
         bot_response = requests.get("https://api.vk.com/method/messages.send?peer_id={}&random_id={}&message={}&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92"
                                     .format(peer_id, random_num, processed_response))
