@@ -7,6 +7,7 @@ import mood
 response = requests.get("https://api.vk.com/method/groups.getLongPollServer?group_id=174367830&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92")
 resp_dict = json.loads(response.text)
 
+
 key = resp_dict['response']['key']
 ts = resp_dict['response']['ts']
 
