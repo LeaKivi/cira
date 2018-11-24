@@ -1,6 +1,7 @@
 import requests
 from random import *
 import json
+import mood
 
 #initiate chat
 response = requests.get("https://api.vk.com/method/groups.getLongPollServer?group_id=174367830&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92")
@@ -37,6 +38,8 @@ while 1:
     if peer_id != 0 and peer_id != "-174367830":
         random_num = randint(1, 10000)
         #do the analysis and detect emotion and decide what to send to user
+        detected_emotion = mood.checkMood(peer_id)
+        print(detected_emotion)
 
         processed_response = "Hi I'm bot"
         bot_response = requests.get("https://api.vk.com/method/messages.send?peer_id={}&random_id={}&message={}&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92"
@@ -44,5 +47,3 @@ while 1:
 
         print("Bot Response")
         print(bot_response.content)
-
-
