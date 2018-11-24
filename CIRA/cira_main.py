@@ -7,7 +7,7 @@ import mood
 response = requests.get(
     "https://api.vk.com/method/groups.getLongPollServer?group_id=174367830&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92")
 resp_dict = json.loads(response.text)
-
+print(resp_dict)
 key = resp_dict['response']['key']
 ts = resp_dict['response']['ts']
 
@@ -47,8 +47,8 @@ TY_SAD_POS_RESPONSES = ["You are most welcome", "Glad I could help", "Anytime"]
 TY_SAD_NEG_KEYWORDS = ("not", "helping...", "nothing's", "changed", "doesn't", "help")
 TY_SAD_NEG_RESPONSES = ["Sorry it didn't help. Let's try smth else ... (to be continued...)"]
 
-ATTACHMENTS_Concentration = ("video-16108331_456253513", "audio762177_338483985", "audio-2000765891_456239030")
-
+ATTACHMENTS_Concentration = ("video-16108331_456253513", "audio762177_338483985", "audio762177_97684325")
+ATTACHMENTS_Cheer = ("audio-2000955558_456239020", "video-1486527_162409309", "audio-2000765891_456239030")
 
 def check_for_responses(emotion, sentence, name):
     for word in sentence.split():
@@ -65,13 +65,13 @@ def check_for_responses(emotion, sentence, name):
                 need_sug = "0"
             if word.lower() in SUG_JOY_KEYWORDS:
                 rand_item = SUG_JOY_RESPONSES[random.randrange(len(SUG_JOY_RESPONSES))]
-                need_sug = "1"
+                need_sug = "2"
                 print(rand_item)
                 print(need_sug)
             if word.lower() in TY_JOY_POS_KEYWORDS:
                 rand_item = TY_JOY_POS_RESPONSES[random.randrange(len(TY_JOY_POS_RESPONSES))]
                 need_sug = "0"
-        elif emotion == "sadness":
+        elif emotion == "sadness" or emotion == "anger":
             if word.lower() in GREETING_KEYWORDS:
                 rand_item = GREETING_SAD_RESPONSES[random.randrange(len(GREETING_SAD_RESPONSES))]
                 rand_item = rand_item.format(name)
@@ -122,12 +122,19 @@ while 1:
         print(detected_emotion)
 
         # print(mood.checkMood(peer_id))
+        user_response = requests.get(
+            "https://api.vk.com/method/users.get?user_ids={}&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92".format(peer_id))
+        resp_user = json.loads(user_response.text)
+        print(resp_user)
+        username = resp_user['response'][0]['first_name']
 
-        processed_response = check_for_responses(detected_emotion, text, "Human")
+        processed_response = check_for_responses(detected_emotion, text, username)
 
         attachment = ""
         if processed_response[1] == "1":
             attachment = ATTACHMENTS_Concentration[random.randrange(len(ATTACHMENTS_Concentration))]
+        if processed_response[1] == "2":
+            attachment = ATTACHMENTS_Cheer[random.randrange(len(ATTACHMENTS_Concentration))]
 
         bot_response = requests.get(
             "https://api.vk.com/method/messages.send?peer_id={}&random_id={}&message={}&attachment={}&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92"
