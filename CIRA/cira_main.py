@@ -57,7 +57,7 @@ while 1:
 
         #print(mood.checkMood(peer_id))
 
-        processed_response = check_for_responses("happy", text)
+        processed_response = check_for_responses(detected_emotion, text)
 
         bot_response = requests.get("https://api.vk.com/method/messages.send?peer_id={}&random_id={}&message={}&access_token=fbdc5bd3cff381a236f0f30a1b58982ca4ddf1508e03a6513af837d67184c6ffa064d2a6737a897bc012e&v=5.92"
                                     .format(peer_id, random_num, processed_response))
