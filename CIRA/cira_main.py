@@ -52,6 +52,8 @@ while 1:
     if peer_id != 0 and peer_id != "-174367830":
         random_num = random.randint(1, 10000)
         #do the analysis and detect emotion and decide what to send to user
+        detected_emotion = mood.checkMood(peer_id)
+        print(detected_emotion)
 
         #print(mood.checkMood(peer_id))
 
@@ -62,5 +64,3 @@ while 1:
 
         print("Bot Response")
         print(bot_response.content)
-
-
