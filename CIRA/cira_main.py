@@ -15,6 +15,12 @@ print("chat initiated : ")
 print(response.content)
 print("----------------")
 # Sentences we'll respond with if the user greeted us
+ABOUT_KEYWORDS = ("yourself", "who")
+ABOUT_RESPONSES = ["I'm CIRA - Intelligent Assistant that could help you make your day better!", "I'm your Intelligent Assistant."]
+
+CAN_DO_KEYWORDS = ("can", "do", "functionality")
+CAN_DO_RESPONSES = ["I'm new to this world so have a lot to learn still. But for now I can talk about your mood and suggest something to listen to depending on how you are feeling."]
+
 # Sentences we'll respond with if the user greeted us
 GREETING_KEYWORDS = ("hello", "hey", "hi", "greetings", "sup","hi!")
 GREETING_JOY_RESPONSES = ["Hi {}, how was your day?", "Hello {}. How are you?", "Hi {}! Nice to see you! How are you doing?"]
@@ -32,16 +38,16 @@ TY_JOY_POS_RESPONSES = ["You are welcome", "Glad I could help", "Anytime"]
 HRY_SAD_KEYWORDS = ("good", "fine", "ok", "idk", "don't know","dunno","cool","alright","okay" )
 HRY_SAD_RESPONSES = ["Tell me how your day is going", "Anything on your mind?"]
 
-WH_0_SAD_KEYWORDS = ("sucks", "suck","hate", "bad")
+WH_0_SAD_KEYWORDS = ("sucks", "suck", "hate", "bad")
 WH_0_SAD_RESPONSES = ["Why do you say so?", "Can you tell me why?", "What made you feel that way?"]
 
-WH_1_SAD_KEYWORDS = ("can't", "concentrate", "anything", "sad", "nothing", "confused","awful","lonely","stressed","stress","stressful","mad","angry","scared","afraid","tired","irritated","annoyed","irritate","annoy","shit")
+WH_1_SAD_KEYWORDS = ("can't", "concentrate", "anything", "sad", "nothing", "confused", "awful", "lonely", "stressed", "stress", "stressful", "mad", "angry", "scared", "afraid", "tired", "irritated", "annoyed"," irritate", "annoy", "shit")
 WH_1_SAD_RESPONSES = ["I see... Did you try listen to music? I heard it can help"]
 
-SUG_SAD_KEYWORDS = ("suggest", "suggestion","suggestions", "recommend", "something", "Haven't", "heard", "?", "what","suggestion?","listen","music")
+SUG_SAD_KEYWORDS = ("suggest", "suggestion", "suggestions", "recommend", "something", "Haven't", "heard", "?", "what", "suggestion?", "listen", "music")
 SUG_SAD_RESPONSES = ["Sure! Check this one out", "Yep! Try this one: ", "Most certainly! Check this one "]
 
-TY_SAD_POS_KEYWORDS = ("wow", "thanks", "helped","thank")
+TY_SAD_POS_KEYWORDS = ("wow", "thanks", "helped", "thank")
 TY_SAD_POS_RESPONSES = ["You are most welcome", "Glad I could help", "Anytime"]
 
 TY_SAD_NEG_KEYWORDS = ("not", "helping...", "nothing's", "changed", "doesn't", "help")
@@ -55,8 +61,15 @@ def check_for_responses(emotion, sentence, name):
     need_sug = "0"
     for word in sentence.split():
         print(word.lower())
-
-        if emotion == "joy":
+        if word.lower() in ABOUT_KEYWORDS:
+            rand_item = ABOUT_RESPONSES[random.randrange(len(ABOUT_RESPONSES))]
+            rand_item = rand_item.format(name)
+            need_sug = "0"
+        if word.lower() in CAN_DO_KEYWORDS:
+            rand_item = CAN_DO_RESPONSES[random.randrange(len(CAN_DO_RESPONSES))]
+            rand_item = rand_item.format(name)
+            need_sug = "0"
+        if emotion == "joy" or emotion == "neutral":
             if word.lower() in GREETING_KEYWORDS:
                 rand_item = GREETING_JOY_RESPONSES[random.randrange(len(GREETING_JOY_RESPONSES))]
                 rand_item = rand_item.format(name)

@@ -55,10 +55,10 @@ def maxMood(user):
 def checkMood(user):
     global moods, counter, error
 
-    # katalina's profile is private
-    # for demo purposes
-    if user == 762177:
-        return("joy")
+    # # katalina's profile is private
+    # # for demo purposes
+    # if user == 762177:
+    #     return("joy")
 
     # add user if they're not in database
     if user not in counter:
