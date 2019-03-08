@@ -1,5 +1,7 @@
 # Cira – Cognitive Intelligent Reactive Assistant
-### The most caring AI-powered interactive online system there is.
+### The most caring AI-powered interactive online system there is.  
+
+_Authors: Jasmine Abobakr | Elina Eloranta | Katalina Kivinen | Jenny Lee | Tinka Valentijn_
 
 Cira revolutionizes the way we think about online environment, making it a more caring and empathetic platform to interact in. The need for meaningful social connectedness has skyrocketed, and without empathy, many people end up feeling alone even when together online. This is why we introduce Cira – the most caring AI-powered interactive online system there is.
 
